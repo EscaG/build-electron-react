@@ -1,38 +1,87 @@
 {
-  "name": "skeleton",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "App",
+	"version": "0.1.0",
+	"description": "App on electron with react",
+	"main": "electron/main/index.js",
+	"author": {
+		"name": "App",
+		"email": "escagt82@gmail.com"
+	},
+	"homepage": "./",
+	"repository": "./",
+	"license": "ISC",
+	"scripts": {
+		"start": "react-scripts start",
+		"start-electron": "concurrently -k \"cross-env BROWSER=none npm start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"electron:serve": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm run electron:start\"",
+		"electron:build": "npm run build && electron-builder -c.extraMetadata.main=electron/main/index.js",
+		"electron:start": "wait-on tcp:3000 && electron .",
+		"electron:debug": "electron --inspect=5858 .",
+		"electron:watch": "nodemon --exec electron ."
+	},
+	"build": {
+		"publish": null,
+		"appId": "com.electron.app",
+		"copyright": "Copyright 2022 App",
+		"files": [
+			"**/*"
+		],
+		"directories": {
+			"buildResources": "assets"
+		},
+		"win": {
+			"icon": "public/favicon.ico",
+			"target": [
+				"nsis"
+			]
+		},
+		"nsis": {
+			"oneClick": false,
+			"uninstallDisplayName": "App",
+			"allowToChangeInstallationDirectory": true,
+			"createDesktopShortcut": true,
+			"createStartMenuShortcut": "false",
+			"installerIcon": "public/favicon.ico",
+			"uninstallerIcon": "public/uninstall.ico"
+		}
+	},
+	"dependencies": {
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^13.3.0",
+		"@testing-library/user-event": "^13.5.0",
+		"electron-is-dev": "^2.0.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-scripts": "5.0.1",
+		"web-vitals": "^2.1.4"
+	},
+	"devDependencies": {
+		"concurrently": "^7.2.2",
+		"cross-env": "^7.0.3",
+		"electron": "^19.0.7",
+		"electron-builder": "^23.1.0",
+		"nodemon": "^2.0.19",
+		"wait-on": "^6.0.1"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }
